@@ -1,6 +1,6 @@
 (ns aoc2019s.day2
-  (:require [clojure.string :as str])
-  (:require [clojure.core.match :refer [match]]))
+  (:require [clojure.string :as str]
+            [clojure.core.match :refer [match]]))
 
 ;; Problem description: https://adventofcode.com/2019/day/2
 ;; Part 1
