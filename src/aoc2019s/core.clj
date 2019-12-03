@@ -70,3 +70,38 @@
      (run)
      (first)
      (println))
+
+;; Part 2
+; (def values (take 100 (range))) ; 0..99
+(def values
+  (for [noun (range 100)
+        verb (range 100)]
+    [noun verb]))
+
+(defn calc [noun verb]
+  (->> "input2.txt"
+       (slurp)
+       (intcode)
+       (set-value noun 1)
+       (set-value verb 2)
+       (run)
+       (first)))
+
+
+; (loop [[noun verb] values]
+;   (if (not= (calc noun verb) 19690720)
+;     (+ (* noun 100) verb)
+;     (recur)))
+
+; (doseq [[noun verb] values]
+;   (if-let [output (calc noun verb)]
+;
+;   (let [output (calc noun verb)]
+;     (if (= output 19690720)
+;       [noun verb]
+;       ))
+;   )
+(doseq [[noun verb] values]
+  (let [output (calc noun verb)]
+    (when (= output 19690720)
+      (println (+ (* 100 noun) verb)))))
