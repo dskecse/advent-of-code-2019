@@ -22,6 +22,9 @@
     99    nil
     :else (throw (Exception. "Something went wrong"))))
 
+(defn set-value [value addr mem]
+  (swap! (atom mem) assoc addr value))
+
 ;; (defn run [intcode]
 ;;   (let [xs (take 4 intcode)]
 ;;     ((process-opcode xs) (nth intcode (nth xs 1)) (nth intcode (nth xs 2)))
@@ -31,8 +34,9 @@
   (let [pos1 (nth xs 1)
         pos2 (nth xs 2)
         op (process-opcode xs)]
-    (swap! (atom intcode) assoc (nth xs 3)
-           (op (nth intcode pos1) (nth intcode pos2))))
+    (set-value (op (nth intcode pos1) (nth intcode pos2)) (nth xs 3) intcode))
+    ; (swap! (atom intcode) assoc (nth xs 3)
+    ;        (op (nth intcode pos1) (nth intcode pos2))))
   )
 
 ; (partition-all 4 [1 2 3 4 5 6 7 8 9])
@@ -61,6 +65,8 @@
 (->> "input2.txt"
      (slurp)
      (intcode)
+     (set-value 12 1)
+     (set-value 2 2)
      (run)
      (first)
      (println))
